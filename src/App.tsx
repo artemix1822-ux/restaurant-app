@@ -1,128 +1,154 @@
-import Navbar from "./components/Navbar" ;
-
+import Navbar from "./components/Navbar";
 import { useState } from "react";
 
 function App() {
   const [commandes, setCommandes] = useState(128);
   const forteAffluence = commandes > 150;
+
   return (
     <>
       <Navbar />
-      <section className="min-h-[80vh] pt-20 flex flex-col justify-center items-center text-center px-6 bg-gradient-to-r from-red-600 to-orange-500 text-white">
 
-  <h2 className="text-5xl font-bold mb-6">
-    Gérez votre restaurant comme un pro
-  </h2>
+      {/* Hero */}
+      <section className="min-h-[85vh] pt-24 flex flex-col justify-center items-center text-center px-6 bg-gradient-to-br from-red-700 via-red-600 to-orange-500 text-white">
+        <span className="text-sm uppercase tracking-widest bg-white/20 px-4 py-1 rounded-full mb-6 font-medium">
+          Tableau de bord restaurant
+        </span>
+        <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight max-w-3xl">
+          Gérez votre restaurant <br />
+          <span className="text-orange-200">comme un pro</span>
+        </h1>
+        <p className="text-lg md:text-xl max-w-2xl mb-10 text-white/80">
+          Suivez les commandes, gérez les menus et analysez vos performances
+          depuis une seule plateforme intuitive.
+        </p>
+        <div className="flex gap-4">
+          <button className="bg-white text-red-600 px-7 py-3 rounded-xl font-semibold hover:scale-105 transition shadow-lg">
+            Découvrir
+          </button>
+          <button className="border border-white/60 text-white px-7 py-3 rounded-xl font-semibold hover:bg-white/10 transition">
+            En savoir plus
+          </button>
+        </div>
+      </section>
 
-  <p className="text-xl max-w-2xl mb-8">
-    Suivez les commandes, gérez les menus et analysez vos performances
-    depuis une seule plateforme.
-  </p>
+      {/* Cartes de stats */}
+      <section className="py-16 px-6 bg-gray-50">
+        <h2 className="text-2xl font-bold text-gray-700 mb-8">
+          Vue d'ensemble du jour
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6">
 
-  <button className="bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:scale-105 transition">
-    Découvrir
-  </button>
+          <div className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition">
+            <p className="text-sm text-gray-500 uppercase tracking-wide mb-1">Commandes aujourd'hui</p>
+            <h3 className="text-4xl font-extrabold text-red-600 mb-4">{commandes}</h3>
+            <button
+              onClick={() => setCommandes(commandes + 1)}
+              className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition"
+            >
+              + Nouvelle commande
+            </button>
+          </div>
 
-</section>
+          <div className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition">
+            <p className="text-sm text-gray-500 uppercase tracking-wide mb-1">Revenus du jour</p>
+            <h3 className="text-4xl font-extrabold text-green-600 mb-1">425 000</h3>
+            <p className="text-gray-400 text-sm">FCFA</p>
+          </div>
 
-{/*Cartes de stats*/}
+          <div className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition">
+            <p className="text-sm text-gray-500 uppercase tracking-wide mb-1">Temps moyen de préparation</p>
+            <h3 className="text-4xl font-extrabold text-blue-600 mb-1">17 min</h3>
+            <p className="text-gray-400 text-sm">par commande</p>
+          </div>
 
-<section className="py-16 px-6">
-  <div className="grid md:grid-cols-3 gap-6">
+        </div>
+      </section>
 
-    <div className="bg-white shadow-lg rounded-xl p-6">
-      <h3 className="text-3xl font-bold text-red-600">{commandes}</h3>
-      <p>Commandes aujourd'hui</p>
-      <button
-  onClick={() => setCommandes(commandes + 1)}
-  className="mt-3 bg-red-600 text-white px-4 py-2 rounded"
->
-  Nouvelle commande
-</button>
-    </div>
+      {/* Tableau commandes */}
+      <section className="py-16 px-6">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-bold text-gray-700">Commandes récentes</h2>
+          <button className="text-sm text-red-600 hover:underline font-medium">
+            Voir tout →
+          </button>
+        </div>
 
-    <div className="bg-white shadow-lg rounded-xl p-6">
-      <h3 className="text-3xl font-bold text-green-600">425 000 FCFA</h3>
-      <p>Revenus du jour</p>
-    </div>
+        <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+          <div className="grid grid-cols-4 bg-red-600 text-white px-6 py-4 text-sm font-semibold uppercase tracking-wide">
+            <p>ID</p>
+            <p>Client</p>
+            <p>Plat</p>
+            <p>Statut</p>
+          </div>
 
-    <div className="bg-white shadow-lg rounded-xl p-6">
-      <h3 className="text-3xl font-bold text-blue-600">17 min</h3>
-      <p>Temps moyen de préparation</p>
-    </div>
+          {[
+            { id: "#001", client: "Mansour", plat: "Burger", statut: "Livrée", color: "text-green-600", bg: "bg-green-50" },
+            { id: "#002", client: "Amar", plat: "Pizza", statut: "En préparation", color: "text-yellow-600", bg: "bg-yellow-50" },
+            { id: "#003", client: "Gray", plat: "Poulet", statut: "En attente", color: "text-red-600", bg: "bg-red-50" },
+          ].map((row, i) => (
+            <div
+              key={i}
+              className="grid grid-cols-4 px-6 py-4 border-b last:border-none hover:bg-gray-50 transition text-sm"
+            >
+              <p className="font-mono font-semibold text-gray-500">{row.id}</p>
+              <p className="font-medium text-gray-700">{row.client}</p>
+              <p className="text-gray-600">{row.plat}</p>
+              <span className={`${row.color} ${row.bg} text-xs font-semibold px-2 py-1 rounded-full w-fit`}>
+                {row.statut}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
 
-  </div>
-</section>
+      {/* Alertes */}
+      <section className="py-16 px-6 bg-gray-50">
+        <h2 className="text-2xl font-bold text-gray-700 mb-8">Alertes intelligentes</h2>
 
- {/*tableau*/}
+        <div className="space-y-4 max-w-3xl">
+          {forteAffluence && (
+            <div className="flex items-start gap-3 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-xl shadow-sm">
+              <span className="text-xl">🔥</span>
+              <div>
+                <p className="font-semibold text-orange-700">Forte affluence</p>
+                <p className="text-sm text-orange-600">Plus de 150 commandes enregistrées aujourd'hui.</p>
+              </div>
+            </div>
+          )}
 
-<section className="py-16 px-6 bg-gray-100">
-  <h2 className="text-3xl font-bold mb-6">
-    Commandes récentes
-  </h2>
+          <div className="flex items-start gap-3 bg-red-50 border-l-4 border-red-500 p-4 rounded-xl shadow-sm">
+            <span className="text-xl">⚠️</span>
+            <div>
+              <p className="font-semibold text-red-700">Commande en attente</p>
+              <p className="text-sm text-red-600">La commande #003 est en attente depuis plus de 20 minutes.</p>
+            </div>
+          </div>
 
-  <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="flex items-start gap-3 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl shadow-sm">
+            <span className="text-xl">🍔</span>
+            <div>
+              <p className="font-semibold text-yellow-700">Stock faible</p>
+              <p className="text-sm text-yellow-600">Le stock de Burgers est presque épuisé. Pensez à réapprovisionner.</p>
+            </div>
+          </div>
 
-    <div className="grid grid-cols-4 bg-red-600 text-white p-4 font-bold">
-      <p>ID</p>
-      <p>Client</p>
-      <p>Plat</p>
-      <p>Statut</p>
-    </div>
+          <div className="flex items-start gap-3 bg-green-50 border-l-4 border-green-500 p-4 rounded-xl shadow-sm">
+            <span className="text-xl">✅</span>
+            <div>
+              <p className="font-semibold text-green-700">Livraisons à jour</p>
+              <p className="text-sm text-green-600">Toutes les livraisons du jour ont été effectuées avec succès.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <div className="grid grid-cols-4 p-4 border-b">
-      <p>#001</p>
-      <p>Mansour</p>
-      <p>Burger</p>
-      <p className="text-green-600">Livrée</p>
-    </div>
-
-    <div className="grid grid-cols-4 p-4 border-b">
-      <p>#002</p>
-      <p>Amar</p>
-      <p>Pizza</p>
-      <p className="text-yellow-600">Préparation</p>
-    </div>
-
-    <div className="grid grid-cols-4 p-4">
-      <p>#003</p>
-      <p>Gray</p>
-      <p>Poulet</p>
-      <p className="text-red-600">En attente</p>
-    </div>
-
-  </div>
-</section>
-
-{/* Alertes intelligentes */}
-
-<section className="py-16 px-6">
-  <h2 className="text-3xl font-bold mb-6">
-    Alertes
-  </h2>
-
-  <div className="space-y-4">
-    {forteAffluence && (
-  <div className="bg-orange-100 border-l-4 border-orange-500 p-4 rounded mb-4">
-    🔥 Forte affluence : plus de 150 commandes aujourd'hui !
-  </div>
-)}
-
-    <div className="bg-red-100 border-l-4 border-red-600 p-4 rounded">
-      ⚠️ Commande #003 en attente depuis 20 minutes.
-    </div>
-
-    <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded">
-      🍔 Stock de Burgers faible.
-    </div>
-
-    <div className="bg-green-100 border-l-4 border-green-600 p-4 rounded">
-      ✅ Toutes les livraisons sont à jour.
-    </div>
-
-  </div>
-</section>
+      {/* Footer */}
+      <footer className="text-center py-6 text-sm text-gray-400 border-t">
+        © 2025 Restaurant App — Tous droits réservés
+      </footer>
     </>
   );
 }
-export default App ;
+
+export default App;

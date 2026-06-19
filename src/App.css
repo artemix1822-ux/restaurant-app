@@ -1,22 +1,62 @@
+/* ─── Typography & base rhythm ──────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+/* ─── Counter ────────────────────────────────────────────────────────────── */
 .counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 6px;
   color: var(--accent);
   background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
+  border: 1.5px solid transparent;
+  transition: border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
   margin-bottom: 24px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  /* Subtle shimmer line at top */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 
   &:hover {
     border-color: var(--accent-border);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.06);
+
+    &::before {
+      opacity: 0.6;
+    }
   }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
   &:focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 2px;
+    outline-offset: 4px;
+    border-radius: 6px;
   }
 }
 
+/* ─── Hero ───────────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
 
@@ -31,6 +71,13 @@
     width: 170px;
     position: relative;
     z-index: 0;
+    filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.14));
+    transition: filter 0.35s ease, transform 0.35s ease;
+
+    &:hover {
+      filter: drop-shadow(0 14px 36px rgba(0, 0, 0, 0.22));
+      transform: translateY(-3px);
+    }
   }
 
   .framework,
@@ -56,6 +103,7 @@
   }
 }
 
+/* ─── Center layout ──────────────────────────────────────────────────────── */
 #center {
   display: flex;
   flex-direction: column;
@@ -70,6 +118,7 @@
   }
 }
 
+/* ─── Next steps ─────────────────────────────────────────────────────────── */
 #next-steps {
   display: flex;
   border-top: 1px solid var(--border);
@@ -77,16 +126,48 @@
 
   & > div {
     flex: 1 1 0;
-    padding: 32px;
+    padding: 36px 32px;
+    transition: background 0.25s ease;
+    position: relative;
+
+    /* Accent top bar on hover */
+    &::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      background: var(--accent-bg);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
     @media (max-width: 1024px) {
       padding: 24px 20px;
     }
   }
 
   .icon {
-    margin-bottom: 16px;
+    margin-bottom: 18px;
     width: 22px;
     height: 22px;
+    opacity: 0.8;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  & > div:hover .icon {
+    opacity: 1;
+    transform: scale(1.1);
   }
 
   @media (max-width: 1024px) {
@@ -104,6 +185,7 @@
   }
 }
 
+/* ─── Social links ───────────────────────────────────────────────────────── */
 #next-steps ul {
   list-style: none;
   padding: 0;
@@ -117,22 +199,39 @@
 
   a {
     color: var(--text-h);
-    font-size: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
     border-radius: 6px;
     background: var(--social-bg);
     display: flex;
-    padding: 6px 12px;
+    padding: 8px 14px;
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    transition: box-shadow 0.3s;
+    border: 1px solid transparent;
+    transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
 
     &:hover {
       box-shadow: var(--shadow);
+      transform: translateY(-2px);
+      border-color: var(--border);
     }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
     .button-icon {
-      height: 18px;
-      width: 18px;
+      height: 16px;
+      width: 16px;
+      opacity: 0.75;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover .button-icon {
+      opacity: 1;
     }
   }
 
@@ -148,19 +247,21 @@
     a {
       width: 100%;
       justify-content: center;
-      box-sizing: border-box;
     }
   }
 }
 
+/* ─── Spacer ─────────────────────────────────────────────────────────────── */
 #spacer {
   height: 88px;
   border-top: 1px solid var(--border);
+
   @media (max-width: 1024px) {
     height: 48px;
   }
 }
 
+/* ─── Ticks ──────────────────────────────────────────────────────────────── */
 .ticks {
   position: relative;
   width: 100%;
@@ -171,14 +272,26 @@
     position: absolute;
     top: -4.5px;
     border: 5px solid transparent;
+    transition: border-color 0.3s ease;
   }
 
   &::before {
     left: 0;
     border-left-color: var(--border);
   }
+
   &::after {
     right: 0;
     border-right-color: var(--border);
+  }
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
